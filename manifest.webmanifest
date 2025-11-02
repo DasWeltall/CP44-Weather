@@ -1,0 +1,24 @@
+{
+  "name": "CP44 Weather",
+  "short_name": "CP44",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "lang": "de",
+  "description": "Präzise Vorhersagen, Radar und Warnungen im minimalistischen Dark Mode.",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
