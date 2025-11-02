@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CP44 Weather</title>
+    <meta name="description" content="CP44 Weather – präzise Vorhersagen, cleane Dark-Mode Experience." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+4Z1JkzQH0o0gqHD2vUIk6mDT5PoqvKG3j1BMpZgI=" crossorigin="" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-grid" aria-hidden="true"></div>
+    <div class="background-fade" aria-hidden="true"></div>
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="branding">
+          <h1>CP44 Weather</h1>
+          <p>Alles was du brauchst – minimal, präzise, sofort.</p>
+        </div>
+        <div class="search-stack">
+          <form id="location-form" autocomplete="off">
+            <label class="visually-hidden" for="location-input">Ort suchen</label>
+            <input id="location-input" name="location" type="search" inputmode="search" placeholder="Stadt, Region oder Koordinaten" spellcheck="false" />
+            <button type="submit" class="primary-btn">Suchen</button>
+            <button type="button" id="locate-btn" class="ghost-btn" title="Aktuellen Standort verwenden">GPS</button>
+          </form>
+          <div id="search-results" class="search-results" hidden></div>
+        </div>
+      </header>
+
+      <section class="status-bar" aria-live="polite">
+        <span id="status-message">Willkommen bei CP44 Weather. Suche einen Ort, um zu starten.</span>
+        <button id="clear-status" class="ghost-btn small" type="button" hidden>Okay</button>
+      </section>
+
+      <section class="favorites-panel">
+        <header>
+          <h2>Favoriten</h2>
+          <p>Speichere Orte lokal auf deinem Gerät – kein Backend nötig.</p>
+        </header>
+        <div id="favorites-list" class="chip-row" role="list"></div>
+      </section>
+
+      <section class="overview-grid" id="overview-section">
+        <article class="card focus" id="current-card">
+          <header>
+            <h2>Aktuell</h2>
+            <div id="favorite-toggle" class="favorite-toggle" role="button" aria-pressed="false" tabindex="0">☆</div>
+          </header>
+          <div id="current-content" class="current-content">
+            <p class="placeholder">Keine Daten. Suche einen Ort oder nutze GPS.</p>
+          </div>
+        </article>
+        <article class="card" id="air-card">
+          <header><h2>Atmosphäre</h2></header>
+          <div id="air-content" class="card-body">
+            <p class="placeholder">Sobald Wetterdaten vorliegen, erscheinen hier Details.</p>
+          </div>
+        </article>
+        <article class="card" id="sun-card">
+          <header><h2>Sonne &amp; Licht</h2></header>
+          <div id="sun-content" class="card-body">
+            <p class="placeholder">Infos zu Sonnenauf- &amp; -untergang folgen.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="forecast-panel" id="forecast-section">
+        <header class="panel-header">
+          <h2>Vorhersagen</h2>
+          <div class="toggle-group" role="tablist">
+            <button class="toggle active" data-range="hourly" role="tab" aria-selected="true">Stunden</button>
+            <button class="toggle" data-range="daily" role="tab" aria-selected="false">Tage</button>
+          </div>
+        </header>
+        <div id="forecast-grid" class="forecast-grid"></div>
+      </section>
+
+      <section class="warnings-panel" id="warnings-section">
+        <header>
+          <h2>Warnungen</h2>
+          <p>Offizielle Hinweise zu Wind, Unwettern und mehr.</p>
+        </header>
+        <div id="warnings-list" class="warnings-list">
+          <p class="placeholder">Keine Warnungen für diesen Ort.</p>
+        </div>
+      </section>
+
+      <section class="radar-panel" id="radar-section">
+        <header class="panel-header">
+          <h2>Radar</h2>
+          <div class="radar-controls">
+            <button type="button" id="radar-back" class="ghost-btn">◀︎</button>
+            <span id="radar-timestamp">–</span>
+            <button type="button" id="radar-forward" class="ghost-btn">▶︎</button>
+          </div>
+        </header>
+        <div id="radar-map" class="radar-map" role="img" aria-label="Regenradar"></div>
+      </section>
+
+      <footer class="app-footer">
+        <p>Alle Daten werden lokal gespeichert. Quellen: Open-Meteo, RainViewer, OpenStreetMap.</p>
+      </footer>
+    </main>
+
+    <template id="warning-template">
+      <article class="warning-card">
+        <header>
+          <span class="warning-level"></span>
+          <h3 class="warning-title"></h3>
+        </header>
+        <p class="warning-description"></p>
+        <footer class="warning-meta"></footer>
+      </article>
+    </template>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-y0Ng3t27Mqv0gijvOLLm1EWj1lrU1s3s6VpZw5ql+Fk=" crossorigin=""></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
